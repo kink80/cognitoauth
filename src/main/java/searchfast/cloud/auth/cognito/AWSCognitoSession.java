@@ -36,8 +36,6 @@ public class AWSCognitoSession {
     private BigInteger k;
 
     private String username;
-    private String password;
-    private String poolId;
 
     private AWSUserHashRoutine userHashRoutine;
     private AWSClientEvidenceRoutine clientEvidenceRoutine;
@@ -50,8 +48,6 @@ public class AWSCognitoSession {
                              String password,
                              String poolId) {
         this.username = username;
-        this.password = password;
-        this.poolId = poolId;
 
         this.passwordScramblingRoutine = new AWSPasswordScramblingRoutine(cryptoParams);
         this.userHashRoutine = new AWSUserHashRoutine(cryptoParams, username, password, poolId);
@@ -67,9 +63,7 @@ public class AWSCognitoSession {
     public synchronized Map<String, String> step1() {
         Map<String, String> authParameters = new HashMap<>();
         authParameters.put("USERNAME", username);
-        authParameters.put("PASSWORD", password);
         authParameters.put("SRP_A", A.toString(16));
-        authParameters.put("UserPoolId", poolId);
 
         return authParameters;
     }
