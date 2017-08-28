@@ -37,22 +37,24 @@ public class AWSCognitoSession {
 
     private String username;
 
-    private AWSUserHashRoutine userHashRoutine;
-    private AWSClientEvidenceRoutine clientEvidenceRoutine;
-    private AWSPasswordScramblingRoutine passwordScramblingRoutine;
+    private final AWSUserHashRoutine userHashRoutine;
+    private final AWSClientEvidenceRoutine clientEvidenceRoutine;
+    private final AWSPasswordScramblingRoutine passwordScramblingRoutine;
+    private final AWSDeviceEvidenceContext deviceEvidenceContext;
 
     private final AWSCryptoUtils cryptoUtils;
 
-    public AWSCognitoSession(AWSCryptoSettings cryptoParams,
+    public AWSCognitoSession(AWSCryptoSettings cryptoSettings,
                              String username,
                              String password,
                              String poolId) {
         this.username = username;
 
-        this.passwordScramblingRoutine = new AWSPasswordScramblingRoutine(cryptoParams);
-        this.userHashRoutine = new AWSUserHashRoutine(cryptoParams, username, password, poolId);
-        this.clientEvidenceRoutine = new AWSClientEvidenceRoutine(cryptoParams, passwordScramblingRoutine);
-        this.cryptoUtils = new AWSCryptoUtils(cryptoParams);
+        this.passwordScramblingRoutine = new AWSPasswordScramblingRoutine(cryptoSettings);
+        this.userHashRoutine = new AWSUserHashRoutine(cryptoSettings, username, password, poolId);
+        this.clientEvidenceRoutine = new AWSClientEvidenceRoutine(cryptoSettings, passwordScramblingRoutine);
+        this.cryptoUtils = new AWSCryptoUtils(cryptoSettings);
+        this.deviceEvidenceContext = new AWSDeviceEvidenceContext(cryptoSettings);
 
         // Generate client private key, ephemeral and multiplier
         a = cryptoUtils.generatePrivateKey();
@@ -87,6 +89,10 @@ public class AWSCognitoSession {
         byte[] key = clientEvidenceRoutine.computeClientEvidenceKey(ctx);
 
         return userHashRoutine.computeChallengeResponse(key, secretBlockString);
+    }
+
+    public synchronized AWSDeviceContext getDeviceContext(String deviceKey, String deviceGroup) {
+        return deviceEvidenceContext.getDeviceContext(deviceKey, deviceGroup);
     }
 
 }
