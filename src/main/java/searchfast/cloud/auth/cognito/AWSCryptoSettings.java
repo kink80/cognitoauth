@@ -4,6 +4,8 @@ import javax.crypto.Mac;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.UUID;
 
 public class AWSCryptoSettings {
 
@@ -29,6 +31,8 @@ public class AWSCryptoSettings {
 
   private static final String ALGORITHM = "SHA-256";
   private static final String MAC_ALGORITHM = "HmacSHA256";
+  private static final String SECURE_RANDOM_ALGORITHM = "SHA1PRNG";
+  private static final int SALT_LENGTH_BITS = 128;
 
   /**
    * Returns new Message Digest based on the predefined
@@ -52,5 +56,22 @@ public class AWSCryptoSettings {
     } catch (NoSuchAlgorithmException e) {
       throw new IllegalStateException(e);
     }
+  }
+
+  public SecureRandom getSecureRandomInstance() {
+    try {
+      return SecureRandom.getInstance(SECURE_RANDOM_ALGORITHM);
+    } catch (NoSuchAlgorithmException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  public BigInteger randomBigInteger() {
+    return new BigInteger(SALT_LENGTH_BITS, getSecureRandomInstance());
+  }
+
+  public String generateRandomString() {
+    final UUID uuid = UUID.randomUUID();
+    return String.valueOf(uuid);
   }
 }

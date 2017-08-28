@@ -129,6 +129,28 @@ RespondToAuthChallengeResult respondToAuthChallengeResult = identityProviderClie
 AuthenticationResultType authenticationResultType = respondToAuthChallengeResult.getAuthenticationResult();
 ~~~~
 
+**Your user pool can have devices enabled, in that case you need them using following routine**
+~~~~
+if(authenticationResultType.getNewDeviceMetadata() != null) {
+  NewDeviceMetadataType deviceMetadata = authenticationResultType.getNewDeviceMetadata();
+
+  final AWSDeviceContext deviceContext = clientSession.getDeviceContext(deviceMetadata.getDeviceKey(),
+                                      deviceMetadata.getDeviceGroupKey());
+
+  final DeviceSecretVerifierConfigType deviceConfig = new DeviceSecretVerifierConfigType();
+  deviceConfig.setPasswordVerifier(deviceContext.getPasswordVerifier());
+  deviceConfig.setSalt(deviceContext.getSalt());
+
+  ConfirmDeviceRequest confirmDeviceRequest = new ConfirmDeviceRequest();
+  confirmDeviceRequest.setAccessToken(authenticationResultType.getAccessToken());
+  confirmDeviceRequest.setDeviceKey(authenticationResultType.getNewDeviceMetadata().getDeviceKey());
+  confirmDeviceRequest.setDeviceName("someDeviceName");
+  confirmDeviceRequest.setDeviceSecretVerifierConfig(deviceConfig);
+  ConfirmDeviceResult confirmDeviceResult = identityProviderClient.confirmDevice(confirmDeviceRequest);
+  confirmDeviceResult.getUserConfirmationNecessary();
+}
+~~~~
+
 You should be successfully authenticated at this stage, now let's obtain our AWS credentials through cognito.
 
 **Initialize Cognito identity client**
