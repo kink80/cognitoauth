@@ -1,0 +1,20 @@
+<settings>
+    <profiles>
+        <profile>
+            <id>ossrh</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+
+    <servers>
+        <server>
+            <id>ossrh</id>
+            <username>your-jira-id</username>
+            <password>your-jira-pwd</password>
+        </server>
+    </servers>
+
+</settings>
