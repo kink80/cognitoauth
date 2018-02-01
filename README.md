@@ -1,6 +1,6 @@
 # AWS Cognito User pool authentication helper
 
-This library aims to fill the gap for pure Java based apps that want to interact with User Pools in AWS  Cognito. The goal is to support user login into federated identity pool that 
+This library aims to fill the gap for pure Java based apps that want to interact with User Pools in AWS  Cognito. The goal is to support user login into federated identity pool that
 would allow this user to be provided with AWS temporary credentials. These credentials can be used later on in order to consume other AWS resources.
 
 
@@ -187,9 +187,12 @@ AWSSessionCredentials sessionCredentials = new BasicSessionCredentials(
     credentialsForIdentityResult.getCredentials().getSessionToken());
 ~~~~
 
+### Maven
 
+This project is available in Maven:
 
+groupId: com.github.kink80
 
+artifactId: cognitoauth
 
-
-    
+version: 1.+
