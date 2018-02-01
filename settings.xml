@@ -12,8 +12,8 @@
     <servers>
         <server>
             <id>ossrh</id>
-            <username>your-jira-id</username>
-            <password>your-jira-pwd</password>
+            <username>agalera</username>
+            <password>{TyS7BWPiky8HvIY491VyYwzJFf2bEU3a77QOsXRRFMA=}</password>
         </server>
     </servers>
 

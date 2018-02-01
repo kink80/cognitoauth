@@ -10,7 +10,9 @@
     <packaging>jar</packaging>
 
     <name>cognitoauth</name>
-    <description>This library aims to fill the gap for pure Java based apps that want to interact with User Pools in AWS Cognito.</description>
+    <description>This library aims to fill the gap for pure Java based apps that want to interact with User Pools in AWS
+        Cognito.
+    </description>
     <url>https://github.com/kink80/cognitoauth</url>
 
     <properties>
@@ -115,5 +117,19 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <developers>
+        <developer>
+            <id>agalera</id>
+            <name>Adrian Galera</name>
+            <email>agalera@sensefields.com</email>
+            <organization>sensefields</organization>
+            <organizationUrl>http://www.sensefields.com/</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>Europe/Madrid</timezone>
+        </developer>
+    </developers>
 
 </project>
