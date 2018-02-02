@@ -1,0 +1,20 @@
+<settings>
+    <profiles>
+        <profile>
+            <id>ossrh</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+
+    <servers>
+        <server>
+            <id>ossrh</id>
+            <username>agalera</username>
+            <password>{TyS7BWPiky8HvIY491VyYwzJFf2bEU3a77QOsXRRFMA=}</password>
+        </server>
+    </servers>
+
+</settings>
